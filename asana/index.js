@@ -2,7 +2,6 @@ var asana = require('asana');
 var config = require('./private-config');
 var p = require('process');
 
-console.log("config is",config);
 var client = asana.Client.create().useAccessToken(config.token);
 
 async function getWorkspaces(user) {
@@ -18,9 +17,15 @@ async function createTask(user,targetWorkspace,taskName) {
 
 function pickWorkspace(taskCommand,workspaces) {
 	
-	let workspaceToken = taskCommand.split(" ")[0];	
-	let workspaceName = config.workspaces[workspaceToken] || config.workspaces.default;
-	console.log("workspaceName is",workspaceName)
+	let taskParts = taskCommand.split(" ");
+	let workspaceToken = taskParts[0];	
+	let workspaceName = config.workspaces[workspaceToken];
+	if (workspaceName) {
+		taskParts.shift();
+		taskCommand = taskParts.join(" ");
+	} else {
+		workspaceName = config.workspaces.default;
+	}	
 	let workspace = workspaces.find((w) => w.name.toLowerCase().match(workspaceName.toLowerCase()))
 	return [workspace,taskCommand];
 }
@@ -32,13 +37,12 @@ async function go(taskCommand) {
 		let [targetWorkspace,taskName] = pickWorkspace(taskCommand,workspaces)
 		let result = await createTask(me,targetWorkspace,taskName);
 		if(result)
-			console.log("task created");
+			console.log("task created in ",targetWorkspace.name);
 	} catch(e) {
 		console.log("got error",e);
 	}
 }
 
-//console.log('args are',p.argv);
 let taskName = p.argv[2];
 if(taskName == undefined) {
 	console.log("need a task name")
