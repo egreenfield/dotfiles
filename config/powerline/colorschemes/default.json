@@ -1,0 +1,21 @@
+{
+  "name": "Default",
+  "groups": {
+
+    "cwd:current_folder":        { "fg": "gray10", "bg": "darkblue", "attrs": ["bold"] },
+    "gitstatus":                 { "fg": "white",            "bg": "darkgreen", "attrs": [] },
+    "gitstatus_branch":          { "fg": "white",           "bg": "darkgreen", "attrs": [] },
+    "gitstatus_branch_clean":    { "fg": "white",           "bg": "darkgreen", "attrs": [] },
+    "gitstatus_branch_dirty":    { "fg": "white",           "bg": "darkgreen", "attrs": [] },
+    "gitstatus_branch_detached": { "fg": "white",    "bg": "darkgreen", "attrs": [] },
+    "gitstatus_tag":             { "fg": "white",        "bg": "darkgreen", "attrs": [] },
+    "gitstatus_behind":          { "fg": "white",          "bg": "darkgreen", "attrs": [] },
+    "gitstatus_ahead":           { "fg": "white",          "bg": "darkgreen", "attrs": [] },
+    "gitstatus_staged":          { "fg": "white",           "bg": "darkgreen", "attrs": [] },
+    "gitstatus_unmerged":        { "fg": "brightred",       "bg": "darkgreen", "attrs": [] },
+    "gitstatus_changed":         { "fg": "white",    "bg": "darkgreen", "attrs": [] },
+    "gitstatus_untracked":       { "fg": "white", "bg": "darkgreen", "attrs": [] },
+    "gitstatus_stashed":         { "fg": "white",        "bg": "darkgreen", "attrs": [] },
+    "gitstatus:divider":         { "fg": "white",           "bg": "darkgreen", "attrs": [] }
+  }
+}

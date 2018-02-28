@@ -44,7 +44,12 @@ shopt -s extglob
 #PS1='\[\033[01;33m--$\033[0m\] '
 #####PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
 #user:directory
-PS1='\[\033[01;33m\u:\W\$\033[0m\] '
+#PS1='\[\033[01;33m\u:\W\$\033[0m\] '
+PS1='\[\033[01;33m\u:\w\$\033[0m\] '
+if [ -f "/usr/local/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh" ]; then 
+	. /usr/local/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh 
+fi
+
 
 # alias todo-txt to t and turn on autocomplete 
 #source /usr/local/Cellar/todo-txt/2.10/etc/bash_completion.d/todo_completion complete -F _todo t
@@ -66,3 +71,8 @@ complete -C '/usr/local/bin/aws_completer' aws
 
 # set up kubectl autocompletion
 source <(kubectl completion bash)
+
+alias tmux='tmux -f ~/dotfiles/tmux.conf'
+
+#export XDG_CONFIG_HOME=~/dotfiles/config
+export XDG_CONFIG_DIRS=$HOME/dotfiles/config:/etc/xdg

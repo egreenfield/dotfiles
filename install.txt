@@ -1,0 +1,10 @@
+source ~/dotfiles/bash-setup.sh
+
+
+from: http://powerline.readthedocs.io/en/master/installation/osx.html
+
+install python (brew install python)
+install pip
+(on osx might need to be doing some funky linking of python into /usr/bin/python?)
+pip install powerline-status
+
