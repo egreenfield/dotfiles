@@ -1,4 +1,6 @@
 
+PATH=$current_directory/bin:$PATH
+
 export LSCOLORS=dxfxcxdxbxegedabagacad
 current_directory="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -76,3 +78,6 @@ alias tmux='tmux -f ~/dotfiles/tmux.conf'
 
 #export XDG_CONFIG_HOME=~/dotfiles/config
 export XDG_CONFIG_DIRS=$HOME/dotfiles/config:/etc/xdg
+
+# araxis integration
+PATH=$PATH:/Applications/Araxis\ Merge.app/Contents/Utilities

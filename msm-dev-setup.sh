@@ -1,6 +1,7 @@
 # AppD codebase basics
 export PATH=${PATH}:~/dev/msm
 export CODEBASE=~/dev/appdy/codebase
+export SAMPLE_APP_CODEBASE=~/dev/appdy/agentscaling
 export ANT_OPTS='-Dstart-glassfish-in-debug-mode=true'
 export GRADLE_OPTS='-Dstart-glassfish-in-debug-mode=true -Dorg.gradle.daemon=true -Dorg.gradle.configureondemand=true'
 function jdk7 {
@@ -14,3 +15,8 @@ function jdk8 {
 }
 alias jdk="env | grep JAVA_HOME"
 jdk8
+
+alias runSampleApp="pushd ${SAMPLE_APP_CODEBASE};java -jar netflix.jar --config samples/polaris.ini"
+
+
+export POLARIS_REMOTE_CLUSTER=a22e7dbba53cc11e8b5b00236e4b0082-347878865.us-west-1.elb.amazonaws.com

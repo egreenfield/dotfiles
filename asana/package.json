@@ -4,11 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "asana": "^0.15.1"
+    "@types/asana": "^0.14.35",
+    "@types/node": "^10.12.18",
+    "asana": "^0.15.1",
+    "typescript": "^3.2.2"
   }
 }
