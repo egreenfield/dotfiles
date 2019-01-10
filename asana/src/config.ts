@@ -4,5 +4,6 @@ interface WorkspaceMap {
 
 export interface Config {
     token:string;
-    workspaces:WorkspaceMap;
+    workspacesAliases:WorkspaceMap;
+    defaultWorkspace: string;
 }

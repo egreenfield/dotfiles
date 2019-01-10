@@ -1,6 +1,7 @@
 import { config } from "./private-config";
 import { Parser } from "./parser";
 import { AsanaClient } from './asanaClient';
+import { Expander } from "./expander";
 
 let command = {
 	name: "",
@@ -10,12 +11,16 @@ let command = {
 
 
 let asanaClient = new AsanaClient(config);
+let exp = new Expander(config);
 
 async function go(taskCommand) {
 	try {
-        await asanaClient.init();
+        await asanaClient.init(exp);
         let p = new Parser();
-        let rawCmd = p.parse(taskCommand);
+		let rawCmd = p.parse(taskCommand);
+		rawCmd = exp.expandWorkspace(rawCmd);
+		await asanaClient.populateExpanderFromWorkspace(exp,rawCmd.workspace);
+		rawCmd = exp.expandAll(rawCmd);
         let command = asanaClient.parseRawCommand(rawCmd);
 		let result = await asanaClient.createTask(command);
 		if(result) {
