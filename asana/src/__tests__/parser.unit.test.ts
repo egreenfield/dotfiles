@@ -42,3 +42,10 @@ testParse("tag","#poeStaff this is a task",{
     project: null,
     tags:["poeStaff"]
 });
+
+testParse("tag after","this is a task #poeStaff",{
+    name:"this is a task",
+    workspace: null,
+    project: null,
+    tags:["poeStaff"]
+});

@@ -43,6 +43,21 @@ export class Parser {
         }
     }
 
+    stripTrailingCommands(parts:string[]) {
+        let lastTaskNameToken = parts.length-1;
+        for(let i=parts.length-1;i>=0;i--) {
+            lastTaskNameToken = i;
+            let p = parts[i];
+            if(this.isOption(p) === false)
+                break;
+        }
+
+        return {
+            options:parts.slice(lastTaskNameToken+1),
+            rest:parts.slice(0,lastTaskNameToken+1)
+        }
+    }
+
     parseOptions(options:string[],cmd:RawCommand) {
         options.forEach(opt => {
             let signal = opt.charAt(0);
@@ -56,9 +71,11 @@ export class Parser {
         let taskParts = taskCommand.split(" ");
         cmd.workspace = null;
 
-        let {options,rest} = this.stripInitialCommands(taskParts);
+        let {options: initialOptions,rest: afterInitial} = this.stripInitialCommands(taskParts);
+        let {options: trailingOptions, rest: afterTrailing} = this.stripTrailingCommands(afterInitial);
+        let options = initialOptions.concat(trailingOptions);
         this.parseOptions(options,cmd);
-        cmd.name = rest.join(" ");
+        cmd.name = afterTrailing.join(" ");
 
         return cmd;
     }
