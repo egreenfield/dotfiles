@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "tsc"
+    "unit": "jest -c jest.unit.config.js",
+    "integration": "jest -c jest.integration.config.js",
+    "build": "tsc",
+    "watch-build": "tsc -w"
   },
   "author": "",
   "license": "ISC",

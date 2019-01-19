@@ -29,12 +29,12 @@ export class Expander {
         let result = {...cmd};
         let f = new Fuse(this.tags,{
             tokenize:true,
-            caseSensitive:false
+            caseSensitive:false,
         });
         if(result.tags) {
             result.tags = result.tags.map(t => {
                 let match = f.search(t);
-                return ((match && match[0]) || t);
+                return ((match && match.length && this.tags[match[0]]) || t);
             });
         }
         return result;

@@ -2,18 +2,26 @@ import { RawCommand } from "./rawCommand";
 
 const workspaceSignal = "-";
 const projectSignal = "+";
+const tagSignal = "#";
 
 function parseWorkspace(value:string,cmd:RawCommand) {
     cmd.workspace = value;
 }
+
 function parseProject(value:string,cmd:RawCommand) {
     cmd.project = value;
 }
+
+function parseTag(value:string,cmd:RawCommand) {
+    cmd.tags = cmd.tags.concat(value);
+}
+
 
 const optionSignals:{[index:string]:(string,RawCommand)=>void} = {};
 
 optionSignals[workspaceSignal] = parseWorkspace;
 optionSignals[projectSignal] = parseProject;
+optionSignals[tagSignal] = parseTag;
 
 export class Parser {
     isOption(part:string) {

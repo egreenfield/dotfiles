@@ -12,22 +12,33 @@ testParse("just name","this is a simple test",{
     name:"this is a simple test",
     workspace:null,
     project:null,
+    tags:[]
 });
 
 testParse("specify a workspace","-w this is a task",{
     name:"this is a task",
     workspace:"w",
     project:null,
+    tags:[]
 });
 
 testParse("specify a project","+poe this is a task",{
     name:"this is a task",
     workspace:null,
     project:"poe",
+    tags:[]
 });
 
 testParse("multiple options","-w +poe this is a task",{
     name:"this is a task",
     workspace:"w",
     project:"poe",
+    tags:[]
+});
+
+testParse("tag","#poeStaff this is a task",{
+    name:"this is a task",
+    workspace: null,
+    project: null,
+    tags:["poeStaff"]
 });

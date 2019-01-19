@@ -6,6 +6,7 @@ import { Expander } from './expander';
 export class AsanaCommand {
     workspace:asana.resources.Resource;
     name:string;
+    tags:string[];
     assignee:number;
 }
 
@@ -49,16 +50,30 @@ export class AsanaClient {
         command.workspace = this.workspaceFromName(rawCmd.workspace);
         command.name = rawCmd.name;
         command.assignee = this.me.id;
+        command.tags = rawCmd.tags.concat();
+
         return command;
     }
 
+    private findTagByName(name:string) {
+        return this.tags.find(v => v.name === name);
+    }
+    async createTask(cmd:AsanaCommand) {
+        let workspaceID = cmd.workspace.id;
 
-    async createTask(sourceCommand) {
-        let command = { ...sourceCommand };
-        let workspaceID = command.workspace.id;
-        delete command.workspace;
+        let tags = cmd.tags? cmd.tags.map(t => this.findTagByName(t).id) : [];
+        let createCommand = {
+            name:cmd.name,
+            assignee: cmd.assignee,
+            tags
+        };
 
-        let result = await this.rawClient.tasks.createInWorkspace(workspaceID,command);
-        return result;
+        let task = await this.rawClient.tasks.createInWorkspace(workspaceID, createCommand);
+
+        return task;
+    }
+
+    async deleteTask(task:asana.resources.Tasks.Type) {
+        return await this.rawClient.tasks.delete(task.id);
     }
 }
