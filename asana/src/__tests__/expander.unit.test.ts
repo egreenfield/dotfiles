@@ -24,6 +24,14 @@ let workspaceNames = [
     "family"
 ];
 
+let projectNames = [
+    "Modularity",
+    "Agile",
+    "Offsite",
+    "Triage",
+    "Metamodel"
+];
+
 let tagNames = [
     "poestaff",
     "person",
@@ -120,5 +128,35 @@ describe("expander",() => {
             ["poe","per"],
             ["poestaff","person"]
         );
+    });
+    describe("Project Tests", () => {
+        function testProjectMatch(name:string, partialName:string,result:string, projects:string[] = projectNames, localConfig:Config = config) {
+            test(name,() => {
+                let cmd:RawCommand = {
+                    workspace: null,
+                    name:"test task",
+                    project:partialName,
+                    tags:[]
+                };
+                let e = new Expander(localConfig);
+                e.projects= projects;
+                cmd = e.expandProject(cmd);
+                expect(cmd.project).toEqual(result);
+            });
+        }
+
+
+        testProjectMatch(
+            "single exact project",
+            "Modularity",
+            "Modularity"
+        );
+
+        testProjectMatch(
+            "single partial project",
+            "modul",
+            "Modularity"
+        );
     })
+
 })

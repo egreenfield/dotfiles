@@ -2,31 +2,18 @@ import { config } from "./private-config";
 import { Parser } from "./parser";
 import { AsanaClient } from './asanaClient';
 import { Expander } from "./expander";
-
-let command = {
-	name: "",
-	assignee: null,
-	workspace: null,
-}
+import { AsanaCommander } from "./AsanaCommander";
 
 
-let asanaClient = new AsanaClient(config);
-let exp = new Expander(config);
+let commander = new AsanaCommander(config);
 
-async function go(taskCommand) {
+async function go(taskCommand:string) {
+
 	try {
-        await asanaClient.init(exp);
-        let p = new Parser();
-		let rawCmd = p.parse(taskCommand);
-		rawCmd = exp.expandWorkspace(rawCmd);
-		await asanaClient.populateExpanderFromWorkspace(exp,rawCmd.workspace);
-		rawCmd = exp.expandAll(rawCmd);
-        let command = asanaClient.parseRawCommand(rawCmd);
-		let result = await asanaClient.createTask(command);
-		if(result) {
-			//console.log("task created:",JSON.stringify(command));
-			console.log("task created in",command.workspace.name);
-		}
+		await commander.init();
+
+		let task = commander.createTask(taskCommand);
+		console.log("task created");
 	} catch(e) {
 		console.log("got error",e);
 	}

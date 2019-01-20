@@ -23,6 +23,7 @@ export class Expander {
     expandAll(cmd:RawCommand) {
         cmd = this.expandWorkspace(cmd);
         cmd = this.expandTags(cmd);
+        cmd = this.expandProject(cmd);
         return cmd;
     }
     expandTags(cmd:RawCommand) {
@@ -39,15 +40,16 @@ export class Expander {
         }
         return result;
     }
+
     expandProject(cmd:RawCommand) {
         let result = {...cmd};
-        let f = new Fuse(this.tags,{
+        let f = new Fuse(this.projects,{
             tokenize:true,
             caseSensitive:false
         });
         if(result.project) {
             let match = f.search(result.project);
-            result.project = ((match && match[0]) || result.project);
+            result.project = match && match.length?  this.projects[match[0]] : result.project;
         }
         return result;
     }

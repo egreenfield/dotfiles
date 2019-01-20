@@ -6,7 +6,8 @@ import { Expander } from './expander';
 export class AsanaCommand {
     workspace:asana.resources.Resource;
     name:string;
-    tags:string[];
+    tags:asana.resources.Tags.Type[];
+    project:asana.resources.Projects.Type;
     assignee:number;
 }
 
@@ -25,10 +26,13 @@ export class AsanaClient {
         return user.workspaces;
     }
 
-    async init(exp:Expander) {
+    async init() {
 		this.me = await this.rawClient.users.me();
         this.workspaces = await this.getWorkspaces(this.me);
-        exp.workspaces = this.workspaces.map(w => w.name);
+    }
+
+    initExpander(exp:Expander) {
+        exp.workspaces = this.workspaces? this.workspaces.map(w => w.name) : [];
     }
 
     async populateExpanderFromWorkspace(exp:Expander,workspaceName:string) {
@@ -50,7 +54,8 @@ export class AsanaClient {
         command.workspace = this.workspaceFromName(rawCmd.workspace);
         command.name = rawCmd.name;
         command.assignee = this.me.id;
-        command.tags = rawCmd.tags.concat();
+        command.tags = rawCmd.tags? rawCmd.tags.map(t => this.findTagByName(t)) : [];
+        command.project = rawCmd.project? this.findProjectByName(rawCmd.project) : undefined;
 
         return command;
     }
@@ -58,14 +63,20 @@ export class AsanaClient {
     private findTagByName(name:string) {
         return this.tags.find(v => v.name === name);
     }
+
+    private findProjectByName(name:string) {
+        return this.projects.find(v => v.name === name);
+    }
+
     async createTask(cmd:AsanaCommand) {
         let workspaceID = cmd.workspace.id;
 
-        let tags = cmd.tags? cmd.tags.map(t => this.findTagByName(t).id) : [];
+
         let createCommand = {
             name:cmd.name,
             assignee: cmd.assignee,
-            tags
+            tags: cmd.tags.map(t => t.id),
+            projects: cmd.project? [cmd.project.id] : undefined
         };
 
         let task = await this.rawClient.tasks.createInWorkspace(workspaceID, createCommand);
