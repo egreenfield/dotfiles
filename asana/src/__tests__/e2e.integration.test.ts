@@ -1,6 +1,6 @@
 import { config } from "./test-private-config";
 import { Parser } from "../parser";
-import { AsanaClient } from '../asanaClient';
+import { AsanaClient, AsanaTask } from '../asanaClient';
 import { Expander } from "../expander";
 import { AsanaCommander } from "../AsanaCommander";
 
@@ -9,31 +9,37 @@ import { AsanaCommander } from "../AsanaCommander";
 describe("real task creation",async () => {
 
     let commander:AsanaCommander;
-    beforeAll(async ()=> {
+    let createdTask:AsanaTask;
+    beforeEach(async ()=> {
         commander = new AsanaCommander(config);
         await commander.init();
     });
+    afterEach(async ()=> {
+        if(createdTask) {
+            await commander.client.deleteTask(createdTask);
+        }
+    });
 
     test("Simple task",async () => {
-        let result = await commander.createTask("DELETE: this is a sample task");
-        expect(result.name).toBe("DELETE: this is a sample task");
-    },5000);
+        createdTask = await commander.createTask("DELETE: this is a sample task");
+        expect(createdTask.name).toBe("DELETE: this is a sample task");
+    },12000);
 
     test("tagged task",async () => {
-        let result = await commander.createTask("#poe DELETE: this task is tagged poe");
-        expect(result).toBeDefined();
-        expect(result.name).toBe("DELETE: this task is tagged poe");
-        expect(result.tags.length).toBe(1);
-        expect(result.tags[0].name).toBe("poestaff");
-    },5000);
+        createdTask = await commander.createTask("#poe DELETE: this task is tagged poe");
+        expect(createdTask).toBeDefined();
+        expect(createdTask.name).toBe("DELETE: this task is tagged poe");
+        expect(createdTask.tags.length).toBe(1);
+        expect(createdTask.tags[0].name).toBe("poestaff");
+    },12000);
 
     test("task with project",async () => {
-        let result = await commander.createTask("+modul DELETE: this task is in project Modularity");
-        expect(result).toBeDefined();
-        expect(result.name).toBe("DELETE: this task is in project Modularity");
-        expect(result.projects).toBeDefined();
-        expect(result.projects.length).toBe(1);
-        expect(result.projects[0].name).toBe("Modularity");
-    },5000);
+        createdTask= await commander.createTask("+modul DELETE: this task is in project Modularity");
+        expect(createdTask).toBeDefined();
+        expect(createdTask.name).toBe("DELETE: this task is in project Modularity");
+        expect(createdTask.projects).toBeDefined();
+        expect(createdTask.projects.length).toBe(1);
+        expect(createdTask.projects[0].name).toBe("Modularity");
+    },12000);
 
 });

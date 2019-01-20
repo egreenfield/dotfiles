@@ -7,14 +7,14 @@ import asana = require("asana");
 
 export class AsanaCommander {
 
-    private asanaClient:AsanaClient;
+    public client:AsanaClient;
 
     constructor(private config:Config) {
-        this.asanaClient  = new AsanaClient(config);
+        this.client  = new AsanaClient(config);
     }
 
     async init() {
-        await this.asanaClient.init();
+        await this.client.init();
     }
 
     async createTask(input:string) {
@@ -24,14 +24,14 @@ export class AsanaCommander {
         let p = new Parser();
         let rawCmd = p.parse(input);
         let expander = new Expander(this.config);
-        this.asanaClient.initExpander(expander);
+        this.client.initExpander(expander);
 
         rawCmd = expander.expandWorkspace(rawCmd);
-        await this.asanaClient.populateExpanderFromWorkspace(expander,rawCmd.workspace);
+        await this.client.populateExpanderFromWorkspace(expander,rawCmd.workspace);
 
         rawCmd = expander.expandAll(rawCmd);
-        let command = this.asanaClient.parseRawCommand(rawCmd);
-        result = await this.asanaClient.createTask(command);
+        let command = this.client.parseRawCommand(rawCmd);
+        result = await this.client.createTask(command);
         return result;
     }
 }

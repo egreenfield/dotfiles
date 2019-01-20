@@ -3,6 +3,8 @@ import { RawCommand } from "./rawCommand";
 import { Config } from "./config";
 import { Expander } from './expander';
 
+export type AsanaTask = asana.resources.Tasks.Type;
+
 export class AsanaCommand {
     workspace:asana.resources.Resource;
     name:string;
@@ -84,7 +86,7 @@ export class AsanaClient {
         return task;
     }
 
-    async deleteTask(task:asana.resources.Tasks.Type) {
+    async deleteTask(task:AsanaTask) {
         return await this.rawClient.tasks.delete(task.id);
     }
 }
