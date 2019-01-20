@@ -58,10 +58,40 @@ testParse("with notes", "this is the name | this is a note for the task",{
     notes: "this is a note for the task"
 });
 
-testParse("with notes and aft4er-options", "this is the name | this is a note for the task #poe",{
+testParse("with notes and after-options", "this is the name | this is a note for the task #poe",{
     workspace: null,
     project: null,
     name:"this is the name",
     tags:["poe"],
     notes: "this is a note for the task"
+});
+testParse("url parsing notes", "the name http://www.google.com/",{
+    workspace: null,
+    project: null,
+    name:"the name",
+    tags:[],
+    notes: "http://www.google.com/"
+});
+
+testParse("url parsing notes https", "the name https://www.google.com/",{
+    workspace: null,
+    project: null,
+    name:"the name",
+    tags:[],
+    notes: "https://www.google.com/"
+});
+
+testParse("don't get confused by http", "the name http",{
+    workspace: null,
+    project: null,
+    name:"the name http",
+    tags:[],
+});
+
+testParse("ignore with extra notes", "the name http://www.google.com | these are the notes",{
+    workspace: null,
+    project: null,
+    name:"the name http://www.google.com",
+    notes: "these are the notes",
+    tags:[],
 });

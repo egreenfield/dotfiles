@@ -76,6 +76,18 @@ export class Parser {
         }
     }
 
+    parseTrailingUrl(words:string[], cmd:RawCommand) {
+        if(cmd.notes !== undefined) {
+            return words;
+        }
+        let url = (words.length && words[words.length-1]) || "";
+        if (url.match(/^http(s?):\/\//) !== null) {
+            cmd.notes = url;
+            return words.slice(0,-1);
+        }
+        return words;
+    }
+
     parse(taskCommand:string):RawCommand {
         let cmd = new RawCommand();
         let taskParts = taskCommand.split(" ");
@@ -86,6 +98,7 @@ export class Parser {
         let options = initialOptions.concat(trailingOptions);
         this.parseOptions(options,cmd);
         let afterNotes = this.parseNotes(afterTrailing,cmd);
+        afterNotes = this.parseTrailingUrl(afterNotes,cmd);
         cmd.name = afterNotes.join(" ");
 
         return cmd;
