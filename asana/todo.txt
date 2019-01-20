@@ -1,4 +1,4 @@
-- description
 - time
 - embedded tagging
 - better result messages.
+- automatically strip trailing urls and put them in notes.

@@ -42,4 +42,10 @@ describe("real task creation",async () => {
         expect(createdTask.projects[0].name).toBe("Modularity");
     },12000);
 
+    test("task with notes",async () => {
+        createdTask= await commander.createTask("DELETE: this task has notes | these are the details about this task");
+        expect(createdTask.name).toBe("DELETE: this task has notes");
+        expect(createdTask.notes).toBe("these are the details about this task")
+    },12000);
+
 });

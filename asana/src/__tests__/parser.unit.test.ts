@@ -49,3 +49,19 @@ testParse("tag after","this is a task #poeStaff",{
     project: null,
     tags:["poeStaff"]
 });
+
+testParse("with notes", "this is the name | this is a note for the task",{
+    workspace: null,
+    project: null,
+    name:"this is the name",
+    tags:[],
+    notes: "this is a note for the task"
+});
+
+testParse("with notes and aft4er-options", "this is the name | this is a note for the task #poe",{
+    workspace: null,
+    project: null,
+    name:"this is the name",
+    tags:["poe"],
+    notes: "this is a note for the task"
+});
