@@ -4,6 +4,7 @@ export interface RawCommand {
     project?:string;
     tags: string[];
     notes?:string;
+    due?:Date;
 }
 
 export class RawCommand implements RawCommand{
@@ -12,4 +13,5 @@ export class RawCommand implements RawCommand{
     project?:string = null;
     tags:string[] = [];
     notes?:string;
+    due?:Date;
 }

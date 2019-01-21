@@ -1,4 +1,7 @@
 import { RawCommand } from "./rawCommand";
+//import {  } from "chrono-node";
+
+let chrono = require("chrono-node");
 
 const workspaceSignal = "-";
 const projectSignal = "+";
@@ -88,12 +91,32 @@ export class Parser {
         return words;
     }
 
+    parseDueDate(words:string[],cmd:RawCommand) {
+        let dueDateStartIndex = words.findIndex(w => w.length && w.startsWith("@"));
+        if(dueDateStartIndex === -1) {
+            return words;
+        }
+        let potentialMatch = words.slice(dueDateStartIndex).join(" ").slice(1);
+        let parseResults = chrono.parse(potentialMatch);
+        if(parseResults.length === 0) {
+            return words;
+        }
+        let firstResult = parseResults[0];
+        if(firstResult.index > 0) {
+            return words;
+        }
+        cmd.due = firstResult.start.date();
+        let remainingWords = (words.slice(0,dueDateStartIndex).join(" ") + potentialMatch.slice(firstResult.text.length)).trim().split(" ");
+        return remainingWords;
+    }
+
     parse(taskCommand:string):RawCommand {
         let cmd = new RawCommand();
-        let taskParts = taskCommand.split(" ");
+        let taskParts = taskCommand.trim().split(" ");
         cmd.workspace = null;
 
-        let {options: initialOptions,rest: afterInitial} = this.stripInitialCommands(taskParts);
+        let afterDates = this.parseDueDate(taskParts,cmd);
+        let {options: initialOptions,rest: afterInitial} = this.stripInitialCommands(afterDates);
         let {options: trailingOptions, rest: afterTrailing} = this.stripTrailingCommands(afterInitial);
         let options = initialOptions.concat(trailingOptions);
         this.parseOptions(options,cmd);
