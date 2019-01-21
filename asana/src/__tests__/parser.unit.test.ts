@@ -107,7 +107,7 @@ describe("Due Dates",() => {
         project: null,
         name:"the name",
         tags:[],
-        due: chrono.parseDate("Friday")
+        due: chrono.parseDate("Friday",new Date(), { forwardDate: true })
     });
 
     testParse("multi-word due date at the end", "the name @next Friday",{
@@ -115,14 +115,14 @@ describe("Due Dates",() => {
         project: null,
         name:"the name",
         tags:[],
-        due: chrono.parseDate("next Friday")
+        due: chrono.parseDate("next Friday",new Date(), { forwardDate: true })
     })
     testParse("simple due date at start", "@Friday the name",{
         workspace: null,
         project: null,
         name:"the name",
         tags:[],
-        due: chrono.parseDate("Friday")
+        due: chrono.parseDate("Friday",new Date(), { forwardDate: true })
     });
 
     testParse("multi-word due date at the start", "@next Friday the name",{
@@ -130,7 +130,7 @@ describe("Due Dates",() => {
         project: null,
         name:"the name",
         tags:[],
-        due: chrono.parseDate("next Friday")
+        due: chrono.parseDate("next Friday",new Date(), { forwardDate: true })
     })
 
     testParse("due date at the end w/ later options", "the name @Friday #poe",{
@@ -138,7 +138,7 @@ describe("Due Dates",() => {
         project: null,
         name:"the name",
         tags:["poe"],
-        due: chrono.parseDate("Friday")
+        due: chrono.parseDate("Friday",new Date(), { forwardDate: true })
     });
 
     testParse("multi-word due date at the end w/ later options", "the name @next Friday #poe",{
@@ -146,7 +146,7 @@ describe("Due Dates",() => {
         project: null,
         name:"the name",
         tags:["poe"],
-        due: chrono.parseDate("next Friday")
+        due: chrono.parseDate("next Friday",new Date(), { forwardDate: true })
     })
 
 });

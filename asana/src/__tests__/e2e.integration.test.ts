@@ -48,4 +48,10 @@ describe("real task creation",async () => {
         expect(createdTask.notes).toBe("these are the details about this task")
     },12000);
 
+    test("task with due date",async () => {
+        createdTask= await commander.createTask("DELETE: this task has a due date @Friday");
+        expect(createdTask.name).toBe("DELETE: this task has a due date");
+        expect(createdTask.due_on).toBeDefined();
+    },12000);
+
 });

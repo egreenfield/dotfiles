@@ -12,6 +12,7 @@ export class AsanaCommand {
     project:asana.resources.Projects.Type;
     assignee:number;
     notes:string;
+    due:Date;
 }
 
 export class AsanaClient {
@@ -60,6 +61,7 @@ export class AsanaClient {
         command.tags = rawCmd.tags? rawCmd.tags.map(t => this.findTagByName(t)) : [];
         command.project = rawCmd.project? this.findProjectByName(rawCmd.project) : undefined;
         command.notes = rawCmd.notes;
+        command.due = rawCmd.due? new Date(rawCmd.due):null;
 
         return command;
     }
@@ -81,7 +83,8 @@ export class AsanaClient {
             assignee: cmd.assignee,
             tags: cmd.tags.map(t => t.id),
             projects: cmd.project? [cmd.project.id] : undefined,
-            notes: cmd.notes || undefined
+            notes: cmd.notes || undefined,
+            due_on: cmd.due?  cmd.due.toISOString().split("T")[0]:undefined
         };
 
         let task = await this.rawClient.tasks.createInWorkspace(workspaceID, createCommand);

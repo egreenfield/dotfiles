@@ -97,7 +97,7 @@ export class Parser {
             return words;
         }
         let potentialMatch = words.slice(dueDateStartIndex).join(" ").slice(1);
-        let parseResults = chrono.parse(potentialMatch);
+        let parseResults = chrono.parse(potentialMatch,new Date(), { forwardDate: true });
         if(parseResults.length === 0) {
             return words;
         }
