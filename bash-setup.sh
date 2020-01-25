@@ -81,3 +81,6 @@ export XDG_CONFIG_DIRS=$HOME/dotfiles/config:/etc/xdg
 
 # araxis integration
 PATH=$PATH:/Applications/Araxis\ Merge.app/Contents/Utilities
+
+# GOIT
+source $current_directory/go.sh

@@ -1,4 +1,4 @@
-import { config } from "./test-private-config";
+import { config } from "./private-config-jest";
 import { Parser } from "../parser";
 import { AsanaClient, AsanaTask } from '../asanaClient';
 import { Expander } from "../expander";
