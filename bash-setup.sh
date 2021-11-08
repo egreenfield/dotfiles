@@ -69,10 +69,10 @@ function npm-do { (PATH=$(npm bin):$PATH; eval $@;) }
 
 
 # set up aws autocompletion
-complete -C '/usr/local/bin/aws_completer' aws
+# complete -C '/usr/local/bin/aws_completer' aws
 
 # set up kubectl autocompletion
-source <(kubectl completion bash)
+# source <(kubectl completion bash)
 
 alias tmux='tmux -f ~/dotfiles/tmux.conf'
 
@@ -81,3 +81,14 @@ export XDG_CONFIG_DIRS=$HOME/dotfiles/config:/etc/xdg
 
 # araxis integration
 PATH=$PATH:/Applications/Araxis\ Merge.app/Contents/Utilities
+
+
+# default to python 3
+PATH=/usr/local/opt/python/libexec/bin:$PATH
+
+. $current_directory/z.sh
+
+export PATH=$PATH:/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
+
+
+source $current_directory/nvm_setup.sh
