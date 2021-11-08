@@ -1,15 +1,22 @@
 
-PATH=$current_directory/bin:$PATH
 
-export LSCOLORS=dxfxcxdxbxegedabagacad
 current_directory="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+# add local bin folder to path by default
+PATH=$current_directory/bin:$PATH
+
+# color coded ls
+export LSCOLORS=dxfxcxdxbxegedabagacad
+
+# change basic defaults and aliases
 alias ls='/bin/ls -p -G'
 alias la='/bin/ls -ap -G'
 alias l='/usr/bin/less'
 alias cp='cp -r'
 alias pd='pushd'
 alias ppd='popd'
+
+alias tmux='tmux -f ~/dotfiles/tmux.conf'
 
 # Ignore case while completing
 shopt -s nocaseglob
@@ -23,17 +30,6 @@ export HISTCONTROL=ignoredups
 set meta-flag on
 set convert-meta off
 set output-meta on
-
-# Useful aliases
-#alias ls='ls $LS_OPTIONS -hF'
-
-alias e='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
-# set our editor to be sublime text
-export EDITOR='emacs'
-
-# GIT
-source $current_directory/git_completion.sh
-source $current_directory/git-flow-completion.sh
 
 
 
@@ -52,43 +48,46 @@ if [ -f "/usr/local/lib/python2.7/site-packages/powerline/bindings/bash/powerlin
 	. /usr/local/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh 
 fi
 
+# config default editor to emacs in the shell
+export EDITOR='emacs'
 
-# alias todo-txt to t and turn on autocomplete 
-#source /usr/local/Cellar/todo-txt/2.10/etc/bash_completion.d/todo_completion complete -F _todo t
-#alias t='/usr/local/Cellar/todo-txt/2.10/bin/todo.sh -d $HOME/Dropbox/personal/todo/todo.cfg'
+# git setup
+source $current_directory/git_completion.sh
+source $current_directory/git-flow-completion.sh
 
-alias maclogout="osascript -e 'tell application \"System Events\" to log out'"
-
-
-# grunt autocompletion
-#eval "$(grunt --completion=bash)"
-
-# npm bin commands
+# make it easy to run local npm binaries
 PATH=./node_modules/.bin:$PATH
 function npm-do { (PATH=$(npm bin):$PATH; eval $@;) }
-
-
-# set up aws autocompletion
-# complete -C '/usr/local/bin/aws_completer' aws
-
-# set up kubectl autocompletion
-# source <(kubectl completion bash)
-
-alias tmux='tmux -f ~/dotfiles/tmux.conf'
-
-#export XDG_CONFIG_HOME=~/dotfiles/config
-export XDG_CONFIG_DIRS=$HOME/dotfiles/config:/etc/xdg
-
-# araxis integration
-PATH=$PATH:/Applications/Araxis\ Merge.app/Contents/Utilities
-
 
 # default to python 3
 PATH=/usr/local/opt/python/libexec/bin:$PATH
 
+
+# useful shortcuts on mac
+alias maclogout="osascript -e 'tell application \"System Events\" to log out'"
+# if you have sublime text installed
+alias e='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
+
+
+# z is a useful alternative to cd that pattern matches against histories
 . $current_directory/z.sh
 
-export PATH=$PATH:/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
 
+# nvm support
 source $current_directory/nvm_setup.sh
-source $current_directory/go.sh
+# go support
+source $current_directory/go_setup.sh
+
+
+# can't really remember what this does?
+#export XDG_CONFIG_HOME=~/dotfiles/config
+export XDG_CONFIG_DIRS=$HOME/dotfiles/config:/etc/xdg
+
+# --------------------------------------------------
+# various Mac App integrations
+# --------------------------------------------------
+
+# araxis integration
+PATH=$PATH:/Applications/Araxis\ Merge.app/Contents/Utilities
+# add VS Code on the command line
+export PATH=$PATH:/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
