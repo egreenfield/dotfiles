@@ -7,7 +7,7 @@ import { Config } from "./config";
 
 export class Expander {
 
-    _workspaces: {nickname:string,name:string}[];
+    _workspaces: {nickname:string,name:string}[] = [];
     tags:string[];
     projects:string[];
 

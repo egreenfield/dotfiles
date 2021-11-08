@@ -1,3 +1,13 @@
+Todo
 - time
 - embedded tagging
 - better result messages.
+
+
+Info
+- Task Creation API:
+    https://asana.com/developers/api-reference/tasks#create
+Nock
+    https://codeburst.io/testing-mocking-http-requests-with-nock-480e3f164851
+Bit
+    https://github.com/teambit/bit

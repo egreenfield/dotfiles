@@ -90,5 +90,5 @@ PATH=/usr/local/opt/python/libexec/bin:$PATH
 
 export PATH=$PATH:/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
 
-
 source $current_directory/nvm_setup.sh
+source $current_directory/go.sh
