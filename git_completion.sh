@@ -45,6 +45,7 @@
 #       git@vger.kernel.org
 #
 
+
 __gitdir ()
 {
     if [ -z "$1" ]; then

@@ -1,6 +1,20 @@
 
 
-current_directory="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+if test $ZSH_VERSION
+then
+	current_directory=${0:a:h}
+else
+	current_directory="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+fi
+
+if test $ZSH_VERSION
+then
+    autoload -Uz compinit
+    compinit
+    autoload bashcompinit
+    bashcompinit    
+fi
+
 
 # add local bin folder to path by default
 PATH=$current_directory/bin:$PATH
@@ -19,9 +33,16 @@ alias ppd='popd'
 alias tmux='tmux -f ~/dotfiles/tmux.conf'
 
 # Ignore case while completing
-shopt -s nocaseglob
+if test $ZSH_VERSION
+then
+	zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+else
+	shopt -s nocaseglob
+fi
+	#statements
 set completion-ignore-case on
-bind "set completion-ignore-case on"
+#esg what does this do
+#bind "set completion-ignore-case on"
 
 # ignore duplicate commands in the history
 export HISTCONTROL=ignoredups
@@ -34,7 +55,12 @@ set output-meta on
 
 
 # turn on extended pattern matching in bash
-shopt -s extglob
+if test $ZSH_VERSION
+then
+	#setopt extglob
+else
+	shopt -s extglob
+fi
 
 # Set a default prompt of: current_directory $
 #PS1='\[\033[01;33m\w$(__git_ps1 " (%s)")\033[0m\] $ '
@@ -43,9 +69,12 @@ shopt -s extglob
 #####PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
 #user:directory
 #PS1='\[\033[01;33m\u:\W\$\033[0m\] '
-PS1='\[\033[01;33m\u:\w\$\033[0m\] '
-if [ -f "/usr/local/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh" ]; then 
-	. /usr/local/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh 
+if test $ZSH_VERSION
+then
+	PROMPT="%F{82}%n%f:%B%F{226}%~%f%b$"
+else
+	PS1='\[\033[01;33m\u:\w\$\033[0m\] '
+
 fi
 
 # config default editor to emacs in the shell
@@ -53,11 +82,11 @@ export EDITOR='emacs'
 
 # git setup
 source $current_directory/git_completion.sh
-source $current_directory/git-flow-completion.sh
+#not needed source $current_directory/git-flow-completion.sh
 
 # make it easy to run local npm binaries
 PATH=./node_modules/.bin:$PATH
-function npm-do { (PATH=$(npm bin):$PATH; eval $@;) }
+npm_do() { (PATH=$(npm bin):$PATH; eval $@;) }
 
 # default to python 3
 PATH=/usr/local/opt/python/libexec/bin:$PATH
@@ -91,3 +120,5 @@ export XDG_CONFIG_DIRS=$HOME/dotfiles/config:/etc/xdg
 PATH=$PATH:/Applications/Araxis\ Merge.app/Contents/Utilities
 # add VS Code on the command line
 export PATH=$PATH:/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
+
+
