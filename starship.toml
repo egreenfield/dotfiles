@@ -1,0 +1,20 @@
+#format = "$directory$git_branch$git_status$python$character$all"
+#add_newline = false
+
+[character]
+success_symbol = "[\\$](bold white) "
+error_symbol = "[\\$](bold red) "
+
+
+[nodejs]
+format = "bloop [node $version](bold green) "
+detect_files = [".node-version", ".nvmrc", "package.json"]
+
+
+[directory]
+# 2. Show only the last 3 directories
+truncation_length = 3
+# 3. What to show when the path is cut off
+truncation_symbol = "…/"
+# 4. Use "fish_style" to turn /home/user/projects/website into ~/p/p/website
+fish_style_pwd_dir_length = 3

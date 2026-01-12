@@ -116,9 +116,12 @@ export XDG_CONFIG_DIRS=$HOME/dotfiles/config:/etc/xdg
 # various Mac App integrations
 # --------------------------------------------------
 
-# araxis integration
-PATH=$PATH:/Applications/Araxis\ Merge.app/Contents/Utilities
 # add VS Code on the command line
 export PATH=$PATH:/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
+
+
+# use starship for prompt:
+export STARSHIP_CONFIG=~/dotfiles/starship.toml
+eval "$(starship init zsh)"
 
 

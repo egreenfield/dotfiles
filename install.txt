@@ -8,3 +8,16 @@ install pip
 (on osx might need to be doing some funky linking of python into /usr/bin/python?)
 pip install powerline-status
 
+
+for fnm
+brew install fnm
+
+for prompts
+brew install starship
+
+
+
+install a nerd font:
+https://github.com/thep0y/monaco-nerd-font
+https://www.nerdfonts.com/font-downloads
+
